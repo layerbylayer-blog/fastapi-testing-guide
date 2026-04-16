@@ -39,8 +39,10 @@ async def test_update_status(order_repo):
 
 
 async def test_list_all(order_repo):
+    before = len(await order_repo.list_all())
+
     await order_repo.create(product_id=uuid4(), quantity=1)
     await order_repo.create(product_id=uuid4(), quantity=2)
 
     orders = await order_repo.list_all()
-    assert len(orders) == 2
+    assert len(orders) == before + 2
